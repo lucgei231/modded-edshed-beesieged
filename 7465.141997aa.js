@@ -17,6 +17,7 @@
     // ====== MODULE 7411: Map Definitions ======
     // Exports three tower defense maps: beehive, picnic, temple
     // Shared across multiple chunks (2283, 7465)
+    7411: function (e, i, n) {
       n.d(i, {
         A: function () {
           return d;
