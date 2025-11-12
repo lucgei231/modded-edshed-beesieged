@@ -1,7 +1,20 @@
+/**
+ * =============================================================================
+ * FILE: 8783.b1ae1c24.js (Webpack Chunk ID: 8783)
+ * PURPOSE: Keyboard and Phonics Data Components
+ * CONTENT:
+ *   - Module 20364: KeyboardView component with mixin behavior
+ *   - Module 23074: Phonetic alphabet data, GPC mappings, keyboard layouts
+ * TECHNOLOGY: Vue.js with Decorators, Phoneme/Grapheme data
+ * =============================================================================
+ */
+
 "use strict";
 (self["webpackChunkgame"] = self["webpackChunkgame"] || []).push([
   [8783],
   {
+    // ====== MODULE 20364: KeyboardView Component ======
+    // Renders on-screen keyboard with mixin for phonics support
     20364: function (e, a, t) {
       var i = t(91114),
         r =
@@ -265,6 +278,9 @@
       };
       ((h = (0, r.Cg)([s.uA], h)), (a.A = h));
     },
+    // ====== MODULE 23074: Phonetics and GPC Data ======
+    // Phoneme mappings, grapheme-phoneme correspondences, keyboard layouts
+    // Exports: oz, c2, T8, ZV, Mf, ko, Gd (phonetic data for different locales)
     23074: function (e, a, t) {
       t.d(a, {
         oz: function () {

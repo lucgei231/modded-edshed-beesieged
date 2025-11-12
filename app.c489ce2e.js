@@ -1,5 +1,24 @@
+/**
+ * =============================================================================
+ * FILE: app.c489ce2e.js
+ * PURPOSE: Main Application Bundle - Entry Point
+ * CONTENT:
+ *   - Module 191: Core exports and utilities (14 major functions)
+ *   - Module 7504: Settings/preferences data
+ *   - Module 13693: Settings mixin
+ *   - Module 13865: Keyboard/letter name data
+ *   - Module 37626: API calls and state management
+ *   - Module 43564: Large component library (5,100+ lines)
+ *   - Many more utility modules and mixins
+ * TECHNOLOGY: Vue.js 2, Vuex state management, API client, UI components
+ * SIZE: ~11.3k lines
+ * =============================================================================
+ */
+
 (function () {
   var e = {
+      // ====== MODULE 191: Core Exports ======
+      // Main application utilities and helper functions
       191: function (e, s, t) {
         "use strict";
         t.d(s, {
@@ -2524,6 +2543,9 @@
         };
         var G = t(13865);
       },
+      // ====== MODULE 43564: Component Library ======
+      // Large collection of Vue.js UI components (5,100+ lines)
+      // Exports: j (main component export)
       43564: function (e, s, t) {
         "use strict";
         t.d(s, {

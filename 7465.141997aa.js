@@ -1,8 +1,22 @@
+/**
+ * =============================================================================
+ * FILE: 7465.141997aa.js (Webpack Chunk ID: 7465)
+ * PURPOSE: Game Scene Initialization and Level Selection
+ * CONTENT:
+ *   - Module 7411: Map definitions (shared with 2283 - beehive, picnic, temple)
+ *   - Module 46458: Main scene/level selector component (LARGEST - ~14,000+ lines)
+ *   - Set polyfills and utility modules
+ * TECHNOLOGY: Vue.js, Phaser 3 game engine, ES6 utilities
+ * =============================================================================
+ */
+
 "use strict";
 (self["webpackChunkgame"] = self["webpackChunkgame"] || []).push([
   [7465],
   {
-    7411: function (e, i, n) {
+    // ====== MODULE 7411: Map Definitions ======
+    // Exports three tower defense maps: beehive, picnic, temple
+    // Shared across multiple chunks (2283, 7465)
       n.d(i, {
         A: function () {
           return d;

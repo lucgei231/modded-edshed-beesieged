@@ -1,7 +1,22 @@
+/**
+ * =============================================================================
+ * FILE: 3777.7e795376.js (Webpack Chunk ID: 3777)
+ * PURPOSE: Keyboard and Settings UI Components
+ * CONTENT: 
+ *   - Module 21843: KeyboardView - Interactive on-screen keyboard component
+ *   - Module 86567: SettingsModal - Game settings/pause menu modal
+ * TECHNOLOGY: Vue.js 2, Bulma CSS framework
+ * =============================================================================
+ */
+
 "use strict";
 (self["webpackChunkgame"] = self["webpackChunkgame"] || []).push([
   [3777],
   {
+    // ====== MODULE 21843: KeyboardView Component ======
+    // Renders an interactive on-screen keyboard for spelling/typing practice
+    // Supports: QWERTY layout, Phonics layout, Accents, Capital letters
+    // Events: keystroke, phoneme audio, selection tracking
     21843: function (e, t, s) {
       s.d(t, {
         A: function () {
@@ -135,30 +150,33 @@
           s(61701),
           s(62953),
           {
-            name: "KeyboardView",
+            // ====== KEYBOARDVIEW COMPONENT CONFIGURATION ======
+            name: "KeyboardView", // Component name: on-screen keyboard
             props: [
-              "letters",
-              "gpcs",
-              "selectedIndices",
-              "qwerty",
-              "active",
-              "phonics",
-              "beekeeper",
-              "buzzwords",
-              "connected",
-              "capitals",
-              "accents",
-              "hide",
-              "backspacePreventDefault",
+              "letters", // Array of letter keys to display
+              "gpcs", // Grapheme-phoneme correspondences for phonetics mode
+              "selectedIndices", // Track which keys are selected (for Beekeeper mode)
+              "qwerty", // Boolean: true = QWERTY layout, false = phonics layout
+              "active", // Is keyboard accepting input?
+              "phonics", // Show phonics pronunciation?
+              "beekeeper", // Beekeeper mode - hexagon selection logic
+              "buzzwords", // Highlight buzzwords mode?
+              "connected", // Is connected to multiplayer server?
+              "capitals", // Show capital letters?
+              "accents", // Show accented characters (with ~ key)?
+              "hide", // Hide keyboard completely?
+              "backspacePreventDefault", // Prevent default backspace behavior?
             ],
             data() {
-              return {};
+              return {}; // No local state - all state from parent props
             },
             computed: {
+              // ====== COMPUTED PROPERTIES: Derived state ======
               keys() {
+                // Build key array: use GPCs if phonics mode, otherwise use letters
                 return this.phonics && this.gpcs && this.gpcs.length
-                  ? this.gpcs.map((e) => e.grapheme)
-                  : this.letters;
+                  ? this.gpcs.map((e) => e.grapheme) // Phonics: extract grapheme from GPC
+                  : this.letters; // QWERTY: use letters array directly
               },
               selectableIndices() {
                 if (
@@ -190,29 +208,43 @@
                 return this.keys.includes("⎵");
               },
             },
+            // ====== LIFECYCLE HOOKS ======
             created() {
+              // Attach keyboard event listeners when component is created
               (window.addEventListener("keyup", this.didKeyUp),
                 window.addEventListener("keydown", this.didKeyDown),
                 window.addEventListener("keypress", this.didKeyDown));
             },
             destroyed() {
+              // Remove keyboard event listeners when component is destroyed
               (window.removeEventListener("keyup", this.didKeyUp),
                 window.removeEventListener("keydown", this.didKeyDown),
                 window.removeEventListener("keypress", this.didKeyDown));
             },
-            mounted() {},
+            mounted() {
+              // Component is attached to DOM
+            },
             methods: {
+              // ====== USER INTERACTION HANDLERS ======
+              
+              // Check if a key at index can be selected (Beekeeper hexagon logic)
               canSelect(e) {
                 return !(
                   this.selectableIndices && !this.selectableIndices.includes(e)
                 );
               },
+              
+              // Handle physical keyboard key press
+              // Manages: backspace prevention, shift/capital toggle
               didKeyDown(e) {
-                ((8 !== e.which && 222 !== e.which) ||
+                ((8 !== e.which && 222 !== e.which) || // Backspace (8) or quote (222)
                   !this.backspacePreventDefault ||
                   e.preventDefault(),
-                  this.active && 16 === e.which && this.didShift());
+                  this.active && 16 === e.which && this.didShift()); // Shift (16)
               },
+              
+              // Handle physical keyboard key release
+              // Matches character to key index and emits event
               didKeyUp(e) {
                 if (this.active) {
                   let t = String.fromCharCode(e.which).toLocaleLowerCase();
@@ -245,12 +277,16 @@
                 } else 13 === e.which && this.$emit("tick");
               },
               didShift() {
+                // Shift key pressed - toggle capitals mode
                 this.$emit("shift");
               },
               didUnShift() {
+                // Shift key released - toggle back to lowercase
                 this.$emit("unshift");
               },
               didClick(e) {
+                // User clicked a key (or matched physical key to on-screen key)
+                // Emits: selectedindex (Beekeeper), letter (with GPC for phonics)
                 this.active &&
                   ((!this.connected && !this.hexSelected(e)) ||
                   (this.buzzwords &&
@@ -270,9 +306,12 @@
                       this.$emit("backspace"));
               },
               didMouseOver(e) {
+                // Mouse hover over key - emit for phoneme audio playback
                 this.phonics && this.$emit("hover-phonics", this.gpcs[e]);
               },
               hexSelected(e) {
+                // Check if hexagon at index is already selected (Beekeeper mode)
+                // Returns false if QWERTY mode without Beekeeper
                 if (this.qwerty && !this.beekeeper) return !1;
                 const t = this.selectedIndices.filter(function (t) {
                   if (t === e) return !0;
@@ -286,6 +325,9 @@
         c = (0, r.A)(o, i, n, !1, null, "60eb5d30", null),
         l = c.exports;
     },
+    // ====== MODULE 86567: SettingsModal Component ======
+    // Game settings/pause menu modal with audio and display controls
+    // Features: Toggle music, toggle SFX (sound effects), resizable text
     86567: function (e, t, s) {
       s.d(t, {
         A: function () {
@@ -615,41 +657,43 @@
         r = s(53235),
         c = s(43564),
         l = {
-          name: "SettingsModal",
-          mixins: [a.A, r.A],
+          // ====== SETTINGSMODAL COMPONENT CONFIGURATION ======
+          name: "SettingsModal", // Component: pause menu/settings modal
+          mixins: [a.A, r.A], // Mix in shared behaviors
           props: {
-            pause: Boolean,
-            number: Boolean,
-            location: 0,
-            ident: String,
-            allowInvertCalculator: Boolean,
-            lesson: { type: Boolean, default: !1 },
-            hasCustomQuitHandler: { type: Boolean, default: !1 },
+            pause: Boolean, // Is this a pause menu (vs. settings)?
+            number: Boolean, // Number keyboard mode?
+            location: 0, // Current game location/level
+            ident: String, // User identifier
+            allowInvertCalculator: Boolean, // Allow inverting calculator layout?
+            lesson: { type: Boolean, default: !1 }, // Is lesson mode?
+            hasCustomQuitHandler: { type: Boolean, default: !1 }, // Custom quit handler?
           },
           data() {
-            return { config: o.A };
+            return { config: o.A }; // Store config object
           },
           computed: {
+            // ====== COMPUTED PROPERTIES: Derived from Vuex store ======
             musicOn() {
-              return this.$store.state.musicOn;
+              return this.$store.state.musicOn; // Background music enabled?
             },
             soundFXOn() {
-              return this.$store.state.soundFXOn;
+              return this.$store.state.soundFXOn; // Sound effects enabled?
             },
             letterNamesOn() {
-              return this.$store.state.letterNamesOn;
+              return this.$store.state.letterNamesOn; // Letter name audio enabled?
             },
             invertCalcOn() {
-              return this.$store.state.invertCalcOn;
+              return this.$store.state.invertCalcOn; // Calculator layout inverted?
             },
             disableTimer() {
-              return this.$store.state.disableTimer;
+              return this.$store.state.disableTimer; // Disable timer display?
             },
             fontPreference() {
-              return this.$store.state.fontPreference;
+              return this.$store.state.fontPreference; // Font choice (dyslexic, muli, sassoon, etc.)
             },
             canChangeFont() {
-              return this.$store.state.canChangeFont;
+              return this.$store.state.canChangeFont; // Is font changeable?
             },
             fontOptions() {
               const e = { dyslexic: "Open Dyslexic", muli: "Muli" };
@@ -665,9 +709,15 @@
             },
           },
           methods: {
+            // ====== EVENT HANDLERS ======
+            
+            // Hide the settings modal
             hideSettings() {
               this.$emit("hide");
             },
+            
+            // Convert font key to CSS font-family name
+            // Supports: dyslexic, sassoon, sassoonCurly, sassoonUs, sassoonZa, muli
             getFontFamilyFromKey(e) {
               switch (e) {
                 case "dyslexic":
@@ -684,14 +734,22 @@
                   return "Muli";
               }
             },
+            
+            // Get display name for font from key
             getFontNameFromKey(e) {
               return this.fontOptions[e] || "Default";
             },
+            
+            // Quit lesson mode and return to menu
+            // Plays click sound and emits quit event
             quitLesson() {
               (this.$store.state.soundFXOn && this.$sounds.clickSound.play(),
                 this.$emit("quit-episode"),
                 this.$emit("hide"));
             },
+            
+            // Quit game - navigate based on game location
+            // Handles: quizshed, number, spelling, phonics, assignments, main menu
             async quit() {
               if (
                 (this.$store.state.soundFXOn && this.$sounds.clickSound.play(),
